@@ -17,7 +17,7 @@ def health():
 # TODO: Implement Airtable integration
 
 
-@app.route("/api/data", methods=['GET'])
+@app.route("/api/food-pickup", methods=['GET'])
 def get_airtable_data():
     try:
         token = os.getenv('AIRTABLE_TOKEN')
