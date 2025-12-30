@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Home({ onGetInvolved }) {
+function Home() {
+    const navigate = useNavigate();
+
     return (
         <div className="animate-fade-in">
             {/* Hero Section */}
@@ -13,7 +16,7 @@ function Home({ onGetInvolved }) {
                     Access to Excess is a Dayton food rescue operation that recovers and redistributes wholesome vegetables and other surplus foods.
                 </p>
                 <button
-                    onClick={onGetInvolved}
+                    onClick={() => navigate('/volunteer')}
                     className="px-8 py-4 bg-emerald-700 text-white text-lg font-medium rounded-full hover:bg-emerald-800 transition-all shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
                 >
                     Get Involved
