@@ -5,6 +5,7 @@ function Home() {
         <div>
             Access To Excess
             <Link to="/food-pickup" className="text-black hover:text-gray-300">Food Pickup</Link>
+            <Link to="/mailing-list-signup" className="text-black hover:text-gray-300">Mailing List Signup Form</Link>
         </div>
     ) 
 

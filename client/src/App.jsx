@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import FoodPickup from './pages/FoodPickup';
+import MailingListSignup from './components/MailingListSignup';
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/food-pickup" element={<FoodPickup />} />
+                <Route path="/mailing-list-signup" element={<MailingListSignup />} />
             </Routes>
         </BrowserRouter>
     )
