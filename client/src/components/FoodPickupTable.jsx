@@ -1,11 +1,10 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function FoodPickupTable({ endpoint, title = "Table" }) {
+export default function FoodPickupTable({ endpoint, title }) {
 
-    const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // Get data
     useEffect(() => {
@@ -13,7 +12,7 @@ export default function FoodPickupTable({ endpoint, title = "Table" }) {
             try {
                 const response = await fetch(import.meta.env.VITE_API_URL + '/api/' + endpoint);
 
-                if (!response.ok){
+                if (!response.ok) {
                     throw new Error('Failed to fetch');
                 }
                 const result = await response.json();
@@ -24,51 +23,62 @@ export default function FoodPickupTable({ endpoint, title = "Table" }) {
                 setLoading(false);
             }
         }
-        fetchData()
+        fetchData();
     }, [endpoint]);
 
-    console.log(data) 
-
-    if (loading) return <div> Loading... </div>;
-    if (error) return <div> Error: {error} </div>
+    if (loading) return <div className="p-8 text-center text-gray-500">Loading schedules...</div>;
+    if (error) return <div className="p-8 text-center text-red-500">Error loading data: {error}</div>;
 
     return (
-        <div className="p-8">
-            <h1 className="text-2xl font-bold mb-8">{title}</h1>
-            <div className="flex flex-col items-start gap-9 max-w-[1207px]">
-                {data?.records?.map((record, index) => (
-                    <div
-                        key={index}
-                        className="w-full bg-white border border-gray-200 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
-                    >
-                        <div className="space-y-3">
-                            <div className="flex flex-col">
-                                <span className="text-sm font-semibold text-gray-700 mb-1">Location</span>
-                                <span className="text-base text-gray-900 font-bold">{record.fields.Location}</span>
-                                <span className="text-xs text-gray-900">{record.fields.Address}</span>
+        <div className="w-full">
+            {title && (
+                <div className="mb-8">
+                    <h2 className="text-xl font-bold text-black mb-2">{title}</h2>
+                    <p className="text-xs text-gray-500 leading-relaxed max-w-2xl">
+                        Lorem ipsum dolor sit amet consectetur. Mauris dolor nisl tempor turpis eget commodo. Eu vitae ullamcorper vel vitae tellus. In dignissim faucibus elementum praesent mi quis enim orci.
+                    </p>
+                </div>
+            )}
+
+            <div className="space-y-6">
+                {data?.records?.map((record, index) => {
+                    const startTime = new Date(record.fields.StartTime);
+                    const endTime = new Date(record.fields.EndTime);
+
+                    // Format date: "Monday (Dec 23, 2025)"
+                    const dateOptions = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+                    const dateString = startTime.toLocaleDateString('en-US', dateOptions).replace(',', ' (').replace(/(\d{4})/, '$1)');
+
+                    // Format time: "12 pm - 3 pm"
+                    const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+                    const startString = startTime.toLocaleTimeString('en-US', timeOptions).toLowerCase();
+                    const endString = endTime.toLocaleTimeString('en-US', timeOptions).toLowerCase();
+
+                    return (
+                        <div
+                            key={index}
+                            className="w-full bg-white border border-gray-200 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow"
+                        >
+                            <div className="mb-6">
+                                <h3 className="text-lg font-bold text-black mb-1">{record.fields.Location}</h3>
+                                <p className="text-xs text-gray-500">{record.fields.Address}</p>
                             </div>
 
-                            <div className="flex flex-col">
-                                <span className="text-xs font-semibold text-gray-700 mb-1">Start Time</span>
-                                <span className="text-base text-gray-900">
-                                    {new Date(record.fields.StartTime).toLocaleString()}
-                                </span>
+                            <div className="mb-6">
+                                <p className="text-xs text-black mb-4">
+                                    {dateString}: {startString} - {endString}
+                                </p>
+                                <p className="text-xs text-gray-600 leading-relaxed">
+                                    {record.fields.Notes}
+                                </p>
                             </div>
 
-                            <div className="flex flex-col">
-                                <span className="text-xs font-semibold text-gray-700 mb-1">End Time</span>
-                                <span className="text-base text-gray-900">
-                                    {new Date(record.fields.EndTime).toLocaleString()}
-                                </span>
-                            </div>
-
-                            <div className="flex flex-col">
-                                <span className="text-sm font-semibold text-gray-700 mb-1">Notes</span>
-                                <span className="text-base text-gray-900">{record.fields.Notes}</span>
-                            </div>
+                            <button className="px-4 py-2 bg-gray-200 text-black text-xs font-bold rounded hover:bg-gray-300 transition-colors">
+                                Map & Directions
+                            </button>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

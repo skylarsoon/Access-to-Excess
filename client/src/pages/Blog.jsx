@@ -61,24 +61,6 @@ function Blog() {
                     ))}
                 </div>
             </section>
-
-            {/* Newsletter / Stay Connected (Optional but nice for a blog) */}
-            <section className="px-4 md:px-8 py-20 bg-stone-100 text-center">
-                <div className="max-w-2xl mx-auto">
-                    <h2 className="text-2xl font-bold text-stone-900 mb-4">Stay Connected</h2>
-                    <p className="text-stone-600 mb-8">
-                        Follow us on social media for real-time updates on distributions and volunteer opportunities.
-                    </p>
-                    <div className="flex justify-center space-x-4">
-                        <button className="px-6 py-3 bg-white border border-stone-300 rounded-full text-stone-700 font-medium hover:bg-stone-50 transition-colors">
-                            Instagram
-                        </button>
-                        <button className="px-6 py-3 bg-white border border-stone-300 rounded-full text-stone-700 font-medium hover:bg-stone-50 transition-colors">
-                            Facebook
-                        </button>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 }
