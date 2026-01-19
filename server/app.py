@@ -3,6 +3,7 @@ from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
 import os
+import stripe
 
 load_dotenv()
 
@@ -141,6 +142,31 @@ def add_receiver_to_mailing_list():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+@app.route('/api/create-donation-intent', methods=['POST'])
+def create_donation():
+    try:
+        stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
+        data = request.json
+        
+        raw_amount = data.get('amount', 25)
+        amount_in_cents = int(float(raw_amount) * 100)
+        
+        user_email = data.get('email')
+        
+        intent = stripe.PaymentIntent.create(
+            amount=amount_in_cents,
+            currency='usd',
+            receipt_email=user_email,
+            automatic_payment_methods={'enabled': True},
+            metadata={'type': 'donation', 'source': 'website'}
+        )
+        return jsonify({'clientSecret': intent['client_secret']})
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
 
 
 if __name__ == "__main__":

@@ -8,6 +8,8 @@ import Volunteer from './pages/Volunteer';
 import Blog from './pages/Blog';
 import FoodPickup from './pages/FoodPickup';
 import MailingListSignup from './pages/MailingListSignup';
+import Donate from './pages/DonationForm';
+import Success from './pages/Success';
 
 function App() {
     return (
@@ -22,6 +24,8 @@ function App() {
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/food-pickup" element={<FoodPickup />} />
                         <Route path="/mailing-list-signup" element={<MailingListSignup />} />
+                        <Route path="/donate" element={<Donate />} />
+                        <Route path="/success" element={<Success />} />
                     </Routes>
                 </div>
                 <Footer />

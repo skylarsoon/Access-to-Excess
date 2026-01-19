@@ -37,14 +37,12 @@ function Header() {
 
 
 
-                    <a
-                        href="https://buy.stripe.com/test_bJe3cx2wpeEs60QeoI08g00"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
+                    <Link
+                        to="/donate"
+                        className={`text-sm font-medium transition-colors ${isActive('/donate')}`}
                     >
                         Donate
-                    </a>
+                    </Link>
 
                     <Link
                         to="/volunteer"
