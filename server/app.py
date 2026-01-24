@@ -90,7 +90,40 @@ def get_blogs():
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 
+@app.route("/api/volunteer-signup", methods=["POST"])
+def volunteer_signup():
+    table_id = "tblj1m339QP4MbR8s"
 
+    try:
+        data = request.json
+        airtable_data = {
+            "records": [
+                {
+                    "fields": {
+                        "Full Name": data.get("name"),
+                        "Email Address": data.get("email"),
+                        "Phone Number": data.get("phoneNumber"),
+                        "Preferred Contact Method": data.get("contactMethod"),
+                        "General Availability": data.get("availability")
+                    }
+                }
+            ]
+        }
+        token = os.getenv('AIRTABLE_TOKEN')
+        url = os.getenv('AIRTABLE_URL') + table_id + '/'
+
+        headers = {
+            'Authorization' : f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+        response = requests.post(url, headers=headers, json=airtable_data)
+        print("Response status:", response.status_code)
+        print("Response body:", response.text)
+        response.raise_for_status()
+        return {"success": True, "data": response.json()}, 200
+    except Exception as e:
+        return jsonify({'error' : str(e)}), 500
+    
 
 @app.route("/api/mailinglist-subscribe", methods=["POST"])
 def add_receiver_to_mailing_list():

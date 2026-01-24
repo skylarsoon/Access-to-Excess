@@ -3,6 +3,13 @@ import { Truck, Users, ShoppingBag, Package, ChevronDown, ChevronUp } from 'luci
 
 function Volunteer() {
     const [openFaq, setOpenFaq] = useState(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        contactMethod: '',
+        availability: ''
+    });
 
     const toggleFaq = (index) => {
         setOpenFaq(openFaq === index ? null : index);
@@ -12,6 +19,42 @@ function Volunteer() {
         const formSection = document.getElementById('volunteer-form');
         if (formSection) {
             formSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    // Update formData when user types
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value     // Update only the field that changed
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(import.meta.env.VITE_API_URL + '/api/volunteer-signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            alert('Form submitted successfully! Thank you!');
+
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to submit form. Please try again.');
         }
     };
 
@@ -139,25 +182,29 @@ function Volunteer() {
                         <h2 className="text-xl font-bold text-center text-black mb-2">Sign Up to Volunteer</h2>
                         <p className="text-xs text-center text-gray-500 mb-8">Fill out the form below and we'll be in touch with next steps</p>
 
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">Full Name *</label>
-                                <input type="text" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
+                                <input name="name" value={formData.name} onChange={handleChange} type="text" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">Email Address *</label>
-                                <input type="email" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
+                                <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">Phone Number *</label>
-                                <input type="tel" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
+                                <input name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} type="tel" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
                             </div>
 
                             <div>
                                 <label className="block text-xs font-medium text-gray-700 mb-2">Preferred Contact Method *</label>
-                                <input type="text" className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required />
+                                <select name="contactMethod" value={formData.contactMethod} onChange={handleChange} className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors" required>
+                                    <option value="">Select a method</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Phone">Phone</option>
+                                </select>
                             </div>
 
                             <div>
@@ -169,6 +216,9 @@ function Volunteer() {
                                 </label>
                                 <select
                                     id="availability"
+                                    name="availability" 
+                                    value={formData.availability} 
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md text-sm focus:outline-none focus:border-black transition-colors"
                                 >
                                     <option value="">Select your availability...</option>
