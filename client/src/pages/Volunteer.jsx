@@ -359,7 +359,7 @@ function Volunteer() {
                                     type="text"
                                     name="name"
                                     value={formData.name}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     placeholder="Your full name"
                                     className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors"
                                     required
@@ -374,7 +374,7 @@ function Volunteer() {
                                     type="email"
                                     name="email"
                                     value={formData.email}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     placeholder="your.email@example.com"
                                     className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors"
                                     required
@@ -389,7 +389,7 @@ function Volunteer() {
                                     type="tel"
                                     name="phone"
                                     value={formData.phone}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     placeholder="+1 xxx-xxx-xxxx"
                                     className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors"
                                     required
@@ -403,7 +403,7 @@ function Volunteer() {
                                 <select
                                     name="availability"
                                     value={formData.availability}
-                                    onChange={handleInputChange}
+                                    onChange={handleChange}
                                     className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors appearance-none cursor-pointer"
                                     style={{
                                         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,

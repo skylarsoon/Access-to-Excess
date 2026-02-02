@@ -1,44 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function About() {
     const navigate = useNavigate();
+    const [updates, setUpdates] = useState([]);
 
-    // Hardcoded blog-style content cards with routes
-    const updates = [
-        {
-            id: 1,
-            slug: "location-update",
-            image: "/about-location-update.jpg",
-            title: "Location Update",
-            date: "January 13, 2026",
-            excerpt: "Heads up! Our main lot is super muddy and a bit unsafe right now, so we've temporarily moved just down the road."
-        },
-        {
-            id: 2,
-            slug: "pole-barn-project",
-            image: "/about-pole-barn.png",
-            title: "Pole Barn Project",
-            date: "December 30, 2025",
-            excerpt: "We're really excited to take the next step toward building a small pole barn at our Olive Road site."
-        },
-        {
-            id: 3,
-            slug: "food-stands",
-            image: "/about-food-stands.jpg",
-            title: "Food Stands",
-            date: "December 30, 2025",
-            excerpt: "Food stands of 2025."
-        },
-        {
-            id: 4,
-            slug: "produce-distribution",
-            image: "/about-produce.jpg",
-            title: "Produce Distribution",
-            date: "December 30, 2025",
-            excerpt: "All the produce we saved and distributed."
-        }
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(import.meta.env.VITE_API_URL + '/api/blogs');
+                const data = await response.json();
+
+                if (data.records && data.records.length > 0) {
+                    setUpdates(data.records);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const scrollToUpdates = () => {
         document.getElementById('updates-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -90,13 +71,13 @@ function About() {
                             <article
                                 key={update.id}
                                 className="bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all cursor-pointer group"
-                                onClick={() => navigate(`/blog/${update.slug}`)}
+                                onClick={() => navigate(`/blog/${update.Slug || update.id}`)}
                             >
                                 {/* Card Image */}
                                 <div className="aspect-[16/10] overflow-hidden">
                                     <img
-                                        src={update.image}
-                                        alt={update.title}
+                                        src={update.Images?.[0]?.url}
+                                        alt={update.Title || 'Update image'}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                     />
                                 </div>
@@ -104,13 +85,13 @@ function About() {
                                 {/* Card Content */}
                                 <div className="p-5">
                                     <h3 className="text-lg font-bold text-[#166534] mb-1 group-hover:text-pro-green transition-colors">
-                                        {update.title}
+                                        {update.Title}
                                     </h3>
                                     <p className="text-sm text-gray-400 mb-3">
-                                        {update.date}
+                                        {update.Date}
                                     </p>
                                     <p className="text-gray-600 text-sm leading-relaxed">
-                                        {update.excerpt}
+                                        {update.Excerpt || update.Content?.substring(0, 150) + '...'}
                                     </p>
                                 </div>
                             </article>
