@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 function BlogPost() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -27,6 +28,17 @@ function BlogPost() {
         };
         fetchPost();
     }, [slug]);
+
+    const images = post?.Images || [];
+    const hasMultipleImages = images.length > 1;
+
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    };
 
     if (loading) {
         return (
@@ -65,7 +77,7 @@ function BlogPost() {
             <section className="relative h-[55vh] min-h-[450px] max-h-[600px] flex items-end -mt-20">
                 <div className="absolute inset-0">
                     <img
-                        src={post.Images?.[0]?.url}
+                        src={images[0]?.url || '/placeholder-image.jpg'}
                         alt={post.Title || 'Blog post image'}
                         className="w-full h-full object-cover"
                     />
@@ -132,6 +144,69 @@ function BlogPost() {
                             prose-strong:text-gray-800"
                         dangerouslySetInnerHTML={{ __html: post.Content }}
                     />
+
+                    {/* Image Gallery Slideshow - Only show if multiple images */}
+                    {hasMultipleImages && (
+                        <div className="mt-12 pt-10 border-t border-gray-100">
+                            <h2 className="text-xl font-bold text-[#166534] mb-6">Photo Gallery</h2>
+                            <div className="relative rounded-2xl overflow-hidden bg-gray-100">
+                                <div className="aspect-video">
+                                    <img
+                                        src={images[currentImageIndex]?.url}
+                                        alt={`${post.Title} - Image ${currentImageIndex + 1}`}
+                                        className="w-full h-full object-contain transition-opacity duration-300"
+                                    />
+                                </div>
+
+                                {/* Previous Button */}
+                                <button
+                                    onClick={prevImage}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-black/60 transition-all"
+                                    aria-label="Previous image"
+                                >
+                                    <ChevronLeft size={24} className="text-white" />
+                                </button>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={nextImage}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-black/60 transition-all"
+                                    aria-label="Next image"
+                                >
+                                    <ChevronRight size={24} className="text-white" />
+                                </button>
+
+                                {/* Image Counter */}
+                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 bg-black/50 backdrop-blur-sm rounded-full">
+                                    <span className="text-white text-sm font-medium">
+                                        {currentImageIndex + 1} / {images.length}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Thumbnail Navigation */}
+                            <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                                {images.map((image, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentImageIndex(index)}
+                                        className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden transition-all ${
+                                            index === currentImageIndex
+                                                ? 'ring-2 ring-pro-green ring-offset-2'
+                                                : 'opacity-60 hover:opacity-100'
+                                        }`}
+                                        aria-label={`View image ${index + 1}`}
+                                    >
+                                        <img
+                                            src={image.url}
+                                            alt={`Thumbnail ${index + 1}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Footer Section with enhanced styling */}
                     <div className="mt-16 pt-10 border-t border-gray-100">
