@@ -175,9 +175,9 @@ function Volunteer() {
     return (
         <div className="animate-fade-in bg-white">
             {/* Hero Section - Full width background with overlay - SAME HEIGHT AS HOME */}
-            <section className="relative h-[90vh] min-h-[600px] flex items-center -mt-20">
+            <section className="relative h-[80vh] min-h-[600px] flex items-center justify-start overflow-hidden -mt-20">
                 {/* Background Image */}
-                <div className="absolute inset-0">
+                <div className="absolute inset-0 z-0">
                     <img
                         src="/volunteer-hero.jpg"
                         alt="Access to Excess volunteer at farmers market with fresh produce"
@@ -194,18 +194,21 @@ function Volunteer() {
                     <div className="absolute inset-0 bg-black/30"></div>
                 </div>
 
-                {/* Hero Content */}
-                <div className="relative z-10 px-6 md:px-12 lg:px-20 max-w-5xl pt-20">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                        Volunteer with Access to Excess<br />
-                        in <span className="text-pro-light-green">Dayton, Ohio.</span>
-                    </h1>
-                    <button
-                        onClick={scrollToForm}
-                        className="mt-4 px-8 py-3 bg-pro-green text-white text-base font-semibold rounded-md hover:bg-[#14532d] transition-all shadow-lg"
-                    >
-                        Get Started
-                    </button>
+                <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full pt-20">
+                    <div className="max-w-xl">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10 leading-[1.15]">
+                            Volunteer with Access to Excess<br />
+                            in <span className="text-pro-light-green">Dayton, Ohio.</span>
+                        </h1>
+                        <div className="flex flex-row gap-4 mt-8">
+                            <button
+                                onClick={scrollToForm}
+                                className="px-6 py-3 bg-pro-green hover:bg-pro-dark text-white text-[15px] font-bold rounded-md shadow-lg transition-all"
+                            >
+                                Get Started
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -243,55 +246,68 @@ function Volunteer() {
                 <div className="absolute bottom-20 right-24 opacity-30">
                     <LeafIcon className="w-8 h-8 text-white" />
                 </div>
+                <div className="absolute bottom-32 right-12 opacity-30">
+                    <BroccoliIcon className="w-10 h-10 text-white" />
+                </div>
 
                 <div className="max-w-6xl mx-auto relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-14 italic">
+                    <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-14">
                         What You Will Help With
                     </h2>
-                    <div className="grid md:grid-cols-4 gap-6">
+                    <div className="grid md:grid-cols-4 gap-6 mb-10">
                         {/* Card 1 - Food Pickups */}
-                        <div className="bg-white rounded-xl p-6 text-center shadow-lg">
-                            <div className="w-14 h-14 border-2 border-[#166534] rounded-lg flex items-center justify-center mx-auto mb-5">
-                                <Truck size={28} className="text-[#166534]" />
+                        <div className="bg-transparent border-2 border-white/30 rounded-xl p-6 text-center hover:border-white/50 transition-all">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5">
+                                <Truck size={28} className="text-pro-dark" />
                             </div>
-                            <h3 className="text-sm font-bold text-black mb-3">Food Pickups</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed">
+                            <h3 className="text-base font-bold text-white mb-3">Food Pickups</h3>
+                            <p className="text-sm text-white/80 leading-relaxed">
                                 Transport rescued food from donors to distribution sites
                             </p>
                         </div>
 
-                        {/* Card 2 - Distribution Events */}
-                        <div className="bg-white rounded-xl p-6 text-center shadow-lg">
-                            <div className="w-14 h-14 border-2 border-[#166534] rounded-lg flex items-center justify-center mx-auto mb-5">
-                                <Users size={28} className="text-[#166534]" />
+                        {/* Card 2 - Admin & Operations */}
+                        <div className="bg-transparent border-2 border-white/30 rounded-xl p-6 text-center hover:border-white/50 transition-all">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5">
+                                <Users size={28} className="text-pro-dark" />
                             </div>
-                            <h3 className="text-sm font-bold text-black mb-3">Distribution Events</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed">
-                                Help distribute food directly to community members
+                            <h3 className="text-base font-bold text-white mb-3">Admin & Operations</h3>
+                            <p className="text-sm text-white/80 leading-relaxed">
+                                Help with scheduling, data entry, and organizational tasks
                             </p>
                         </div>
 
                         {/* Card 3 - Market Support */}
-                        <div className="bg-white rounded-xl p-6 text-center shadow-lg">
-                            <div className="w-14 h-14 border-2 border-[#166534] rounded-lg flex items-center justify-center mx-auto mb-5">
-                                <ShoppingBag size={28} className="text-[#166534]" />
+                        <div className="bg-transparent border-2 border-white/30 rounded-xl p-6 text-center hover:border-white/50 transition-all">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5">
+                                <ShoppingBag size={28} className="text-pro-dark" />
                             </div>
-                            <h3 className="text-sm font-bold text-black mb-3">Market Support</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed">
+                            <h3 className="text-base font-bold text-white mb-3">Market Support</h3>
+                            <p className="text-sm text-white/80 leading-relaxed">
                                 Assist with organizing and running community markets
                             </p>
                         </div>
 
                         {/* Card 4 - Cleanup & Logistics */}
-                        <div className="bg-white rounded-xl p-6 text-center shadow-lg">
-                            <div className="w-14 h-14 border-2 border-[#166534] rounded-lg flex items-center justify-center mx-auto mb-5">
-                                <Package size={28} className="text-[#166534]" />
+                        <div className="bg-transparent border-2 border-white/30 rounded-xl p-6 text-center hover:border-white/50 transition-all">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5">
+                                <Package size={28} className="text-pro-dark" />
                             </div>
-                            <h3 className="text-sm font-bold text-black mb-3">Cleanup & Logistics</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed">
+                            <h3 className="text-base font-bold text-white mb-3">Cleanup & Logistics</h3>
+                            <p className="text-sm text-white/80 leading-relaxed">
                                 Support warehouse sorting, packing, and facility maintenance
                             </p>
                         </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="flex justify-center mt-8">
+                        <button
+                            onClick={() => window.location.href = '/donate'}
+                            className="px-8 py-3.5 bg-[#FFC570] text-gray-900 font-bold rounded-lg hover:bg-[#e5b060] transition-colors shadow-lg"
+                        >
+                            Can't Volunteer? Donate Instead
+                        </button>
                     </div>
                 </div>
             </section>

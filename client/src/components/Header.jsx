@@ -10,7 +10,8 @@ function Header() {
     const isHome = location.pathname === '/';
     const isVolunteer = location.pathname === '/volunteer';
     const isAbout = location.pathname === '/about';
-    const isOverlayPage = isHome || isVolunteer || isAbout;
+    const isDonate = location.pathname === '/donate';
+    const isOverlayPage = isHome || isVolunteer || isAbout || isDonate;
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 

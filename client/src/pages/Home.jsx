@@ -53,7 +53,7 @@ function Home() {
     return (
         <div className="animate-fade-in bg-white">
             {/* Hero Section - Per Correct Figma Wireframe */}
-            <header className="relative h-[90vh] min-h-[600px] flex items-center justify-start overflow-hidden -mt-20">
+            <header className="relative h-[80vh] min-h-[600px] flex items-center justify-start overflow-hidden -mt-20">
                 {/* Background Image - Colorful produce/farmer's market */}
                 <div className="absolute inset-0 z-0">
                     <img
@@ -76,8 +76,8 @@ function Home() {
                     <div className="max-w-xl">
                         {/* Text with GREEN highlights on "excess" and "access" per Figma */}
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-10 leading-[1.15]">
-                            Saving <span className="text-pro-light-green">excess</span> food<br />
-                            & Increasing <span className="text-pro-light-green">access</span> to it.
+                            Saving <span className="text-pro-light-green">Excess</span> food<br />
+                            & Increasing <span className="text-pro-light-green">Access</span> to it.
                         </h1>
 
                         {/* SOLID GREEN BUTTONS per Figma - NOT underlined text */}
@@ -108,7 +108,7 @@ function Home() {
                         Providing Access to Food for All.
                     </h3>
                     <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                        Lorem ipsum dolor sit amet consectetur. In id orci mattis nisi. Amet quisque a ultrices ultricies nec egestas ante. Nibh non dignissim in egestas elit.
+                        By reducing waste and strengthening community access, we help ensure good food reaches people—not landfills.
                     </p>
                 </div>
             </section>
@@ -196,7 +196,7 @@ function Home() {
                             onClick={() => navigate('/volunteer')}
                         >
                             <img
-                                src="/banner2.png"
+                                src="/banner3.jpg"
                                 alt="Community food distribution"
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
@@ -212,7 +212,7 @@ function Home() {
                             onClick={() => navigate('/about')}
                         >
                             <img
-                                src="/banner3.jpg"
+                                src="/banner2.png"
                                 alt="Fresh produce and vegetables"
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
