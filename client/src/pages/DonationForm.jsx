@@ -69,6 +69,7 @@ export default function Donate() {
   const [loading, setLoading] = useState(false);
   const [donationType, setDonationType] = useState('once'); // 'once' or 'monthly'
   const [selectedPreset, setSelectedPreset] = useState(50);
+  const [isMonthlyGift, setIsMonthlyGift] = useState(false);
 
   // Other Ways to Donate - dropdown state
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('venmo'); // 'venmo' or 'cashapp'
@@ -88,7 +89,12 @@ export default function Donate() {
       const res = await fetch(import.meta.env.VITE_API_URL + "/api/create-donation-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: currentAmount, email: currentEmail }),
+        body: JSON.stringify({ 
+          amount: currentAmount, 
+          email: currentEmail,
+          monthly: isMonthlyGift,
+          fund: isMonthlyGift ? 'Food Rescue Fund' : 'General Operations'
+        }),
       });
       const data = await res.json();
       setClientSecret(data.clientSecret);
@@ -249,7 +255,13 @@ export default function Donate() {
                     ? 'bg-[#FFC570] text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-800'
                     }`}
-                  onClick={() => setDonationType('once')}
+                  onClick={() => {
+                    setDonationType('once');
+                    setIsMonthlyGift(false);
+                    if (isValidEmail(email)) {
+                      getPaymentIntent(amount, email);
+                    }
+                  }}
                 >
                   GIVE ONCE
                 </button>
@@ -258,7 +270,12 @@ export default function Donate() {
                     ? 'bg-[#FFC570] text-gray-900 shadow-sm'
                     : 'text-gray-600 hover:text-gray-800'
                     }`}
-                  onClick={() => setDonationType('monthly')}
+                  onClick={() => {
+                    setDonationType('monthly');
+                    if (isValidEmail(email)) {
+                      getPaymentIntent(amount, email);
+                    }
+                  }}
                 >
                   MONTHLY
                 </button>
@@ -315,6 +332,33 @@ export default function Donate() {
               />
             </div>
 
+            {/* Monthly Gift Checkbox */}
+            <div className="mb-4">
+              <label className="flex items-center gap-3 cursor-pointer p-3 bg-[#fef9e7] border border-[#FFC570]/30 rounded-lg hover:bg-[#fef9e7]/80 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={isMonthlyGift}
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    setIsMonthlyGift(isChecked);
+                    
+                    // Automatically switch to monthly tab when checked
+                    if (isChecked && donationType === 'once') {
+                      setDonationType('monthly');
+                    }
+                    
+                    if (isValidEmail(email)) {
+                      getPaymentIntent(amount, email);
+                    }
+                  }}
+                  className="w-5 h-5 text-[#138622] border-gray-300 rounded focus:ring-[#138622] focus:ring-2"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  Make this a monthly gift (Food Rescue Fund)
+                </span>
+              </label>
+            </div>
+
             {/* 501c3 Notice */}
             <div className="bg-[#fef9e7] border border-[#FFC570]/30 rounded-lg p-3 mb-6">
               <p className="text-xs text-gray-600 leading-relaxed">
@@ -333,7 +377,7 @@ export default function Donate() {
               </div>
             ) : clientSecret ? (
               <Elements key={clientSecret} options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
-                <DonationFormWrapper amount={amount} email={email} />
+                <DonationFormWrapper amount={amount} email={email} isMonthlyGift={isMonthlyGift} />
               </Elements>
             ) : (
               <button
@@ -341,7 +385,7 @@ export default function Donate() {
                 disabled={!isValidEmail(email)}
                 className="w-full py-4 bg-pro-light-green border-pro-light-green text-white font-bold rounded-lg hover:bg-pro-green transition-colors text-lg shadow-md disabled:opacity-50"
               >
-                GIVE NOW
+                {isMonthlyGift ? `GIVE $${amount} MONTHLY` : `GIVE $${amount}`}
               </button>
             )}
           </div>
@@ -731,10 +775,10 @@ export default function Donate() {
 }
 
 // Wrapper component to style the existing DonationForm within the new design
-function DonationFormWrapper({ amount, email }) {
+function DonationFormWrapper({ amount, email, isMonthlyGift }) {
   return (
     <div className="stripe-form-wrapper">
-      <DonationForm amount={amount} email={email} />
+      <DonationForm amount={amount} email={email} isMonthlyGift={isMonthlyGift} />
       <style>{`
         .stripe-form-wrapper form {
           padding: 0 !important;

@@ -1,7 +1,7 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 
-export default function DonationForm({ amount, email }) {
+export default function DonationForm({ amount, email, isMonthlyGift }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,7 +39,7 @@ export default function DonationForm({ amount, email }) {
         disabled={isProcessing || !stripe}
         className="w-full py-4 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 text-lg shadow-lg"
       >
-        {isProcessing ? "Processing..." : `Donate $${amount}`}
+        {isProcessing ? "Processing..." : (isMonthlyGift ? `Donate $${amount} Monthly` : `Donate $${amount}`)}
       </button>
 
       {errorMessage && (

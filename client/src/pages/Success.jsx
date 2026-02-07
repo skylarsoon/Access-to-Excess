@@ -4,6 +4,29 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+const addToMailchimp = async (paymentIntent) => {
+  try {
+    const response = await fetch(import.meta.env.VITE_API_URL + '/api/add-donor-to-mailchimp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: paymentIntent.receipt_email,
+        amount: (paymentIntent.amount / 100).toFixed(2), // Convert from cents to dollars
+        monthly: paymentIntent.metadata?.recurring === 'true',
+        fund: paymentIntent.metadata?.fund || 'General Operations',
+        firstName: '', // You might want to collect this during donation
+        lastName: ''   // You might want to collect this during donation
+      })
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to add donor to Mailchimp:', await response.text());
+    }
+  } catch (error) {
+    console.error('Error adding donor to Mailchimp:', error);
+  }
+};
+
 export default function Success() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('loading');
@@ -23,6 +46,8 @@ export default function Success() {
 
       switch (paymentIntent.status) {
         case 'succeeded':
+          // Add donor to Mailchimp
+          await addToMailchimp(paymentIntent);
           setStatus('success');
           setMessage('Thank you! Your donation has been processed successfully.');
           break;
