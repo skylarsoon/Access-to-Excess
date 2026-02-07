@@ -36,7 +36,7 @@ def get_airtable_data():
 
 @app.route("/api/blogs", methods=['GET'])
 def get_blogs():
-    table_id = "tblbTwkoJHoiqBIJV"
+    table_id = os.getenv('AIRTABLE_BLOG_TABLE')
 
     try:
         token = os.getenv('AIRTABLE_TOKEN')
@@ -89,7 +89,7 @@ def get_blogs():
 
 @app.route("/api/volunteer-signup", methods=["POST"])
 def volunteer_signup():
-    table_id = "tblj1m339QP4MbR8s"
+    table_id = os.getenv('AIRTABLE_VOLUNTEER_TABLE')
 
     try:
         data = request.json
@@ -99,7 +99,7 @@ def volunteer_signup():
                     "fields": {
                         "Full Name": data.get("name"),
                         "Email Address": data.get("email"),
-                        "Phone Number": data.get("phoneNumber"),
+                        "Phone Number": data.get("phone"),
                         "Preferred Contact Method": data.get("contactMethod"),
                         "General Availability": data.get("availability")
                     }
