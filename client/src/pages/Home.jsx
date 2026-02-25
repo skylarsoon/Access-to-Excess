@@ -108,14 +108,14 @@ function Home() {
                         Providing Access to Food for All.
                     </h3>
                     <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                        By reducing waste and strengthening community access, we help ensure good food reaches people—not landfills.
+                        By reducing waste and strengthening community access, we help ensure good food reaches people, not landfills.
                     </p>
                 </div>
             </section>
 
             {/* Stats Section - Clean Design with Green Numbers */}
             <section className="px-4 md:px-8 py-16 bg-white">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 max-w-4xl mx-auto">
                     <div className="py-8">
                         <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">1.5M+ Pounds</div>
                         <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">of food rescued and redistributed since our founding in 2019.</p>
