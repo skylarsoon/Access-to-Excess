@@ -117,17 +117,17 @@ function Home() {
             <section className="px-4 md:px-8 py-16 bg-white">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
                     <div className="py-8">
-                        <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">180k+ Pounds</div>
-                        <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">of food rescued and redistributed in 2023.</p>
+                        <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">1.5M+ Pounds</div>
+                        <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">of food rescued and redistributed since our founding in 2019.</p>
                     </div>
                     <div className="py-8">
                         <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">130 Families</div>
                         <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">received 40 pounds of food in 2023.</p>
                     </div>
-                    <div className="py-8">
-                        <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">500k+ Pounds</div>
-                        <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">of food rescued and redistributed since our founding in 2019.</p>
-                    </div>
+                    {/* <div className="py-8">
+                        <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">180k+ Pounds</div>
+                        <p className="text-sm text-gray-600 max-w-[220px] mx-auto leading-relaxed">of food rescued and redistributed in 2023.</p>
+                    </div> */}
                 </div>
             </section>
 

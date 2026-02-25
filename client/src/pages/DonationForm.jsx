@@ -534,7 +534,7 @@ export default function Donate() {
                     <p className="text-sm text-[#138622] mt-0.5">Fresh vegetables, fruits, and herbs from gardens</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
+                {/* <li className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -544,7 +544,7 @@ export default function Donate() {
                     <span className="font-bold text-gray-900 text-base">No Canned/Shelf-Stable Items</span>
                     <p className="text-sm text-[#138622] mt-0.5">We only accept fresh, daily items</p>
                   </div>
-                </li>
+                </li> */}
                 <li className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-[#138622] flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -563,7 +563,7 @@ export default function Donate() {
           {/* RIGHT: Contact Form */}
           <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
             <h3 className="text-xl font-bold text-gray-800 text-center mb-2">FILL OUT THIS FORM</h3>
-            <p className="text-center text-[#138622] text-sm mb-6">OR TEXT/CALL 937-931-3279</p>
+            <p className="text-center text-[#138622] text-sm mb-6">OR TEXT/CALL 937-931-3278</p>
 
             <form onSubmit={handleFoodFormSubmit} className="space-y-4">
               <div>
