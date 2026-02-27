@@ -267,5 +267,6 @@ def add_donor_to_mailchimp():
 
 
 
-if __name__ == "__main__":
-    app.run(port=int(os.environ.get("PORT", 5000)))
+# Uncomment the following lines to run the Flask app locally:
+# if __name__ == "__main__":
+#     app.run(port=int(os.environ.get("PORT", 5000)))
