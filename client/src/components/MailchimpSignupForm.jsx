@@ -51,7 +51,7 @@ export default function MailchimpSignupForm({ variant = "default" }) {
 
         try {
             const res = await fetch(
-                import.meta.env.VITE_API_URL + "/api/mailinglist-subscribe",
+                 "/api/mailinglist-subscribe",
                 {
                     method: "POST",
                     headers: {

@@ -6,7 +6,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const addToMailchimp = async (paymentIntent) => {
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL + '/api/add-donor-to-mailchimp', {
+    const response = await fetch( '/api/add-donor-to-mailchimp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
