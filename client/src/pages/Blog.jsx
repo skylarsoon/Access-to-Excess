@@ -6,7 +6,7 @@ function Blog() {
     useEffect(() => {
         try{
             const fetchData = async () => {
-                const response = await fetch(import.meta.env.VITE_API_URL + '/api/blogs');
+                const response = await fetch( '/api/blogs');
                 const data = await response.json();
 
                 if (data.records && data.records.length > 0) {
