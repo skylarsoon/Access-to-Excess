@@ -86,7 +86,7 @@ export default function Donate() {
     if (!isValidEmail(currentEmail) || !currentAmount) return;
     setLoading(true);
     try {
-      const res = await fetch(import.meta.env.VITE_API_URL + "/api/create-donation-intent", {
+      const res = await fetch( "/api/create-donation-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
