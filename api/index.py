@@ -188,7 +188,7 @@ def create_checkout_session():
         fund = data.get('fund', 'General Operations')
         
         success_url = data.get('origin', 'http://localhost:5173') + '/success?session_id={CHECKOUT_SESSION_ID}&email=' + user_email
-        cancel_url = data.get('origin', 'http://localhost:5173') + '/donate?cancel=true'
+        cancel_url = data.get('origin', 'http://localhost:5173') + '/donate'
         
         metadata = {
             'type': 'donation', 
