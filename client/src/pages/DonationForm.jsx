@@ -63,7 +63,7 @@ export default function Donate() {
   const [loading, setLoading] = useState(false);
   const [donationType, setDonationType] = useState('once'); // 'once' or 'monthly'
   const [selectedPreset, setSelectedPreset] = useState(50);
-  const [isMonthlyGift, setIsMonthlyGift] = useState(false);
+  const [isFoodRescue, setIsFoodRescue] = useState(false);
 
   // Other Ways to Donate - dropdown state
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('venmo'); // 'venmo' or 'cashapp'
@@ -86,9 +86,10 @@ export default function Donate() {
         body: JSON.stringify({ 
           amount: amount, 
           email: email,
-          monthly: isMonthlyGift,
-          fund: isMonthlyGift ? 'Food Rescue Fund' : 'General Operations',
-          origin: window.location.origin
+          monthly: donationType === 'monthly',
+          fund: donationType === 'monthly' ? (isFoodRescue ? 'Food Rescue Fund' : 'General Operations') : 'General Operations',
+          origin: window.location.origin,
+          successUrl: window.location.origin + '/success?email=' + encodeURIComponent(email)
         }),
       });
       const data = await res.json();
@@ -257,7 +258,7 @@ export default function Donate() {
                     }`}
                   onClick={() => {
                     setDonationType('once');
-                    setIsMonthlyGift(false);
+                    setIsFoodRescue(false);
                   }}
                 >
                   GIVE ONCE
@@ -331,13 +332,11 @@ export default function Donate() {
               <label className="flex items-center gap-3 cursor-pointer p-3 bg-[#fef9e7] border border-[#FFC570]/30 rounded-lg hover:bg-[#fef9e7]/80 transition-colors">
                 <input
                   type="checkbox"
-                  checked={isMonthlyGift}
+                  checked={isFoodRescue}
                   onChange={(e) => {
                     const isChecked = e.target.checked;
-                    setIsMonthlyGift(isChecked);
-                    
-                    // Automatically switch to monthly tab when checked
-                    if (isChecked && donationType === 'once') {
+                    setIsFoodRescue(isChecked);
+                    if (isChecked && donationType !== 'monthly') {
                       setDonationType('monthly');
                     }
                   }}
@@ -371,7 +370,7 @@ export default function Donate() {
                 disabled={!isValidEmail(email)}
                 className="w-full py-4 bg-pro-light-green border-pro-light-green text-white font-bold rounded-lg hover:bg-pro-green transition-colors text-lg shadow-md disabled:opacity-50"
               >
-                {isMonthlyGift ? `GIVE $${amount} MONTHLY` : `GIVE $${amount}`}
+                {donationType === 'monthly' ? `GIVE $${amount} MONTHLY` : `GIVE $${amount}`}
               </button>
             )}
           </div>

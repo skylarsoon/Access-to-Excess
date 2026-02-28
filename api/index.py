@@ -187,8 +187,8 @@ def create_checkout_session():
         is_monthly = data.get('monthly', False)
         fund = data.get('fund', 'General Operations')
         
-        success_url = data.get('origin', 'http://localhost:5173') + '/success?session_id={CHECKOUT_SESSION_ID}'
-        cancel_url = data.get('origin', 'http://localhost:5173') + '/'
+        success_url = data.get('origin', 'http://localhost:5173') + '/success?session_id={CHECKOUT_SESSION_ID}&email=' + user_email
+        cancel_url = data.get('origin', 'http://localhost:5173') + '/donate?cancel=true'
         
         metadata = {
             'type': 'donation', 
@@ -242,6 +242,7 @@ def create_checkout_session():
         return jsonify({'url': session.url})
     except Exception as e:
         return jsonify({'error': str(e)}), 403
+
 
 @app.route('/api/add-donor-to-mailchimp', methods=['POST'])
 def add_donor_to_mailchimp():
@@ -299,7 +300,6 @@ def add_donor_to_mailchimp():
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 
 # if __name__ == "__main__":
