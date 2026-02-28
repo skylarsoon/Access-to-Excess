@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
-const addToMailchimp = async (paymentIntent) => {
+const addToMailchimp = async (email, amount, isMonthly, fund) => {
+  if (!email) return;
+  
   try {
     const response = await fetch( '/api/add-donor-to-mailchimp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: paymentIntent.receipt_email,
-        amount: (paymentIntent.amount / 100).toFixed(2), // Convert from cents to dollars
-        monthly: paymentIntent.metadata?.recurring === 'true',
-        fund: paymentIntent.metadata?.fund || 'General Operations',
-        firstName: '', // You might want to collect this during donation
-        lastName: ''   // You might want to collect this during donation
+        email: email,
+        amount: amount,
+        monthly: isMonthly,
+        fund: fund,
+        firstName: '',
+        lastName: ''
       })
     });
     
@@ -34,33 +33,22 @@ export default function Success() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const clientSecret = searchParams.get('payment_intent_client_secret');
+    const sessionId = searchParams.get('session_id');
+    const cancel = searchParams.get('cancel');
 
-    if (!clientSecret) {
+    if (cancel) {
       setStatus('error');
+      setMessage('Payment was cancelled.');
       return;
     }
 
-    stripePromise.then(async (stripe) => {
-      const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-      switch (paymentIntent.status) {
-        case 'succeeded':
-          // Add donor to Mailchimp
-          await addToMailchimp(paymentIntent);
-          setStatus('success');
-          setMessage('Thank you! Your donation has been processed successfully.');
-          break;
-        case 'processing':
-          setStatus('processing');
-          setMessage("Your payment is processing. We'll update you via email.");
-          break;
-        default:
-          setStatus('error');
-          setMessage('Something went wrong with the transaction.');
-          break;
-      }
-    });
+    if (sessionId) {
+      setStatus('success');
+      setMessage('Thank you! Your donation has been processed successfully.');
+    } else {
+      setStatus('error');
+      setMessage('Something went wrong with the transaction.');
+    }
   }, [searchParams]);
 
   return (
@@ -102,6 +90,15 @@ export default function Success() {
               >
                 Return Home
               </Link>
+              
+              <a 
+                href="https://billing.stripe.com/p/login/cNi28r9wb0YW1Y51MngrS00" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full py-3 text-sm text-gray-500 underline hover:text-gray-700 text-center"
+              >
+                Manage Subscription
+              </a>
             </div>
           </div>
         )}
