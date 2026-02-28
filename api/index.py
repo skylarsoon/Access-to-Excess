@@ -226,7 +226,6 @@ def create_donation():
                 currency='usd',
                 receipt_email=user_email,
                 automatic_payment_methods={'enabled': True},
-                payment_method_types=['card'],
                 metadata=metadata
             )
             return jsonify({'clientSecret': intent['client_secret']})
@@ -292,6 +291,5 @@ def add_donor_to_mailchimp():
 
 
 
-# Uncomment the following lines to run the Flask app locally:
 # if __name__ == "__main__":
 #     app.run(port=int(os.environ.get("PORT", 5000)))
