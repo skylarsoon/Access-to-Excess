@@ -151,7 +151,7 @@ function Home() {
 
       {/* Stats Section - Clean Design with Green Numbers */}
       <section className="px-4 md:px-8 py-16 bg-white">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-center items-start gap-8 md:gap-16 max-w-4xl mx-auto">
           <div className="py-8 items-center text-center">
             <div className="text-4xl md:text-5xl font-bold text-pro-green mb-2">
               1.5M+ Pounds

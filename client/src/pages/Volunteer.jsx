@@ -106,7 +106,7 @@ function Volunteer() {
             const result = await response.json();
 
             alert('Form submitted successfully! Thank you!');
-
+            setFormData({ name: '', email: '', phone: '', availability: '' });
 
         } catch (error) {
             console.error('Error:', error);
