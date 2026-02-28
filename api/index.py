@@ -116,6 +116,41 @@ def volunteer_signup():
         print("Response status:", response.status_code)
         print("Response body:", response.text)
         response.raise_for_status()
+        
+        # Also add to Mailchimp with "volunteer" tag
+        MAILCHIMP_API_KEY = os.getenv("MAILCHIMP_API_KEY")
+        MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
+        MAILCHIMP_DATA_CENTER = os.getenv("MAILCHIMP_DATA_CENTER")
+        
+        email = data.get("email", "").strip().lower()
+        full_name = data.get("name", "").strip()
+        name_parts = full_name.split(" ", 1)
+        first_name = name_parts[0]
+        last_name = name_parts[1] if len(name_parts) > 1 else ""
+        
+        import hashlib
+        subscriber_hash = hashlib.md5(email.encode()).hexdigest()
+        
+        mc_url = f"https://{MAILCHIMP_DATA_CENTER}.api.mailchimp.com/3.0/lists/{MAILCHIMP_AUDIENCE_ID}/members/{subscriber_hash}"
+        
+        mc_payload = {
+            "email_address": email,
+            "status_if_new": "subscribed",
+            "status": "subscribed",
+            "merge_fields": {
+                "FNAME": first_name,
+                "LNAME": last_name,
+                "PHONE": data.get("phone"),
+            },
+            "tags": ["volunteer"],
+        }
+        
+        requests.put(
+            mc_url,
+            auth=("anystring", MAILCHIMP_API_KEY),
+            json=mc_payload,
+        )
+        
         return {"success": True, "data": response.json()}, 200
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
