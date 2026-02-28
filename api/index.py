@@ -202,10 +202,9 @@ def create_donation():
             currency='usd',
             receipt_email=user_email,
             automatic_payment_methods={'enabled': True},
-            payment_method_types=['card'],
             metadata=metadata
         )
-        return jsonify({'clientSecret': intent['clientSecret']})
+        return jsonify({'clientSecret': intent['client_secret']})
     except Exception as e:
         return jsonify(error=str(e)), 403
 

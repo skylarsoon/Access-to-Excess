@@ -376,7 +376,13 @@ export default function Donate() {
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#166534] mx-auto"></div>
               </div>
             ) : clientSecret ? (
-              <Elements key={clientSecret} options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
+              <Elements key={clientSecret} options={{ 
+                clientSecret, 
+                appearance: { theme: 'stripe' },
+                mode: 'payment',
+                amount: amount * 100,
+                currency: 'usd'
+              }} stripe={stripePromise}>
                 <DonationFormWrapper amount={amount} email={email} isMonthlyGift={isMonthlyGift} />
               </Elements>
             ) : (
