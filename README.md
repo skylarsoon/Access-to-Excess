@@ -1,4 +1,5 @@
 # Access to Excess
+Website is live! Currently hosted at: https://www.accesstoexcessfood.org/
 
 ## Project Overview
 Access to Excess is a nonprofit application connecting surplus resources with those in need. This repository contains the source code for the platform.
@@ -29,6 +30,6 @@ pip install -r requirements.txt
 flask run
 ```
 
-## Future Integrations
-- **Stripe**: Donation processing will be added.
-- **Airtable**: Data management integration will be added.
+## Current State
+- **Stripe**: Donation processing has been added.
+- **Airtable**: Data management integration has been added.
